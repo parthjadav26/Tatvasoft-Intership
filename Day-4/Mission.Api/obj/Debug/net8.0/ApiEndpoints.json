@@ -1,0 +1,18 @@
+[
+  {
+    "ContainingType": "Mission.Api.Controllers.LoginController",
+    "Method": "LoginUser",
+    "RelativePath": "api/Login/LoginUser",
+    "HttpMethod": "POST",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "model",
+        "Type": "Mission.Entities.ViewModels.Login.UserLoginRequestModel",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  }
+]
