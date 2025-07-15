@@ -48,9 +48,9 @@ namespace Mission.Services.Service
             return result;
         }
 
-        public async Task<ResponseResult> UpdateUserAsync(UpdateUserRequestModel model)
+        public async Task<ResponseResult> UpdateUserAsync(UpdateUserRequestModel model, string imageUploadPath)
         {
-            var (response, message ) = await _userRepository.UpdateUserAsync(model);
+            var (response, message ) = await _userRepository.UpdateUserAsync(model, imageUploadPath);
 
             var result = new ResponseResult()
             {
@@ -73,5 +73,17 @@ namespace Mission.Services.Service
         {
             return await _userRepository.DeleteUser(userId);
         }
+
+        public async Task<ResponseResult> ChangePasswordAsync(ChangePasswordRequestModel model)
+        {
+            return await _userRepository.ChangePasswordAsync(model);
+        }
+
+        public async Task<UserResponseModel?> GetUserProfileDetailById(int userId)
+        {
+            return await _userRepository.GetUserProfileDetailById(userId);
+        }
+
+
     }
 }

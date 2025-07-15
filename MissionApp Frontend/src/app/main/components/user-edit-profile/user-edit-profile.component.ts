@@ -40,7 +40,13 @@ declare var window: any;
   templateUrl: './user-edit-profile.component.html',
   styleUrls: ['./user-edit-profile.component.css'],
   standalone: true,
-  imports: [FormsModule, ListBoxModule, ReactiveFormsModule, NavbarComponent, CommonModule]
+  imports: [
+    FormsModule,
+    ListBoxModule,
+    ReactiveFormsModule,
+    NavbarComponent,
+    CommonModule,
+  ],
 })
 export class UserEditProfileComponent implements OnInit, OnDestroy {
   changePasswordModal: any;
@@ -65,6 +71,9 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
   lastName: any;
   contactUsForm: any;
   private unsubscribe: Subscription[] = [];
+  newPassword: string;
+  oldPassword: string;
+  confirmPassword: string;
 
   constructor(
     private _commonService: CommonService,
@@ -146,12 +155,18 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
 
     this.userFormCheckValid();
     this.loginUserDetailByUserId(this.loginUserId);
-
-    this.getUserSkill();
-    this.fetchData(this.userId);
-
     this.getCountryList();
 
+    // this.getUserSkill();
+    this.userSkillList = [
+    { value: 1, text: 'India' },
+    { value: 4, text: 'Russia' },
+    { value: 3, text: 'UK' },
+    { value: 2, text: 'USA' }
+  ];
+    this.fetchData(this.userId);
+
+    
     this.changePasswordModal = new window.bootstrap.Modal(
       document.getElementById('changePasswordModal')
     );
@@ -161,6 +176,7 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
     this.contactUsModal = new window.bootstrap.Modal(
       document.getElementById('contactUsModal')
     );
+    
   }
   @ViewChildren(ListBoxComponent)
   private listbox: QueryList<ListBoxComponent>;
@@ -181,7 +197,7 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.unsubscribe.forEach((sb) => sb.unsubscribe())
+    this.unsubscribe.forEach((sb) => sb.unsubscribe());
   }
 
   saveSkill() {
@@ -189,69 +205,79 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
       skill: this.skillList1.join(','),
       userId: this.loginUserId,
     };
-    const addUserSkillSubscribe = this._commonService.addUserSkill(value).subscribe(
-      (data: any) => {
-        if (data.result == 1) {
-          this._toast.success({ detail: 'SUCCESS', summary: data.data });
-          setTimeout(() => {
-            this.closeAddYourSkillModal();
-          }, 1000);
-        } else {
-          this._toast.error({ detail: 'ERROR', summary: data.message });
-        }
-      },
-      (err) => this._toast.error({ detail: 'ERROR', summary: err.message })
-    );
+    const addUserSkillSubscribe = this._commonService
+      .addUserSkill(value)
+      .subscribe(
+        (data: any) => {
+          if (data.result == 1) {
+            this._toast.success({ detail: 'SUCCESS', summary: data.data });
+            setTimeout(() => {
+              this.closeAddYourSkillModal();
+            }, 1000);
+          } else {
+            this._toast.error({ detail: 'ERROR', summary: data.message });
+          }
+        },
+        (err) => this._toast.error({ detail: 'ERROR', summary: err.message })
+      );
     this.unsubscribe.push(addUserSkillSubscribe);
   }
 
   getUserSkill() {
-    const userSkillSubscirbe = this._commonService.getUserSkill(this.loginUserId).subscribe(
-      (data: any) => {
-        if (data.result == 1) {
-          if (data.data.length > 0) {
-            this.userSkillList = data.data;
-            this.userSkillList = this.userSkillList[0].text.split(',');
+    const userSkillSubscirbe = this._commonService
+      .getUserSkill(this.loginUserId)
+      .subscribe(
+        (data: any) => {
+          if (data.result == 1) {
+            if (data.data.length > 0) {
+              this.userSkillList = data.data;
+              this.userSkillList = this.userSkillList[0].text.split(',');
+            } else {
+              this.userSkillList = this.data1;
+            }
           } else {
-            this.userSkillList = this.data1;
+            this._toast.error({ detail: 'ERROR', summary: data.message });
           }
-        } else {
-          this._toast.error({ detail: 'ERROR', summary: data.message });
-        }
-      },
-      (err) => this._toast.error({ detail: 'ERROR', summary: err.message })
-    );
+        },
+        (err) => this._toast.error({ detail: 'ERROR', summary: err.message })
+      );
     this.unsubscribe.push(userSkillSubscirbe);
   }
 
   getCountryList() {
-    const countryListSubscribe = this._commonService.countryList().subscribe((data: any) => {
-      if (data.result == 1) {
-        this.countryList = data.data;
-      } else {
-        this._toast.error({
-          detail: 'ERROR',
-          summary: data.message,
-          duration: APP_CONFIG.toastDuration,
-        });
-      }
-    });
+
+    const countryListSubscribe = this._commonService
+      .countryList()
+      .subscribe((data: any) => {
+        if (data.result == 1) {
+          this.countryList = data.data;
+          console.log(this.countryList);
+        } else {
+          this._toast.error({
+            detail: 'ERROR',
+            summary: data.message,
+            duration: APP_CONFIG.toastDuration,
+          });
+        }
+      });
     this.unsubscribe.push(countryListSubscribe);
   }
 
   getCityList(countryId: any) {
     countryId = countryId.target.value;
-    const cityListSubscribe = this._commonService.cityList(countryId).subscribe((data: any) => {
-      if (data.result == 1) {
-        this.cityList = data.data;
-      } else {
-        this._toast.error({
-          detail: 'ERROR',
-          summary: data.message,
-          duration: APP_CONFIG.toastDuration,
-        });
-      }
-    });
+    const cityListSubscribe = this._commonService
+      .cityList(countryId)
+      .subscribe((data: any) => {
+        if (data.result == 1) {
+          this.cityList = data.data;
+        } else {
+          this._toast.error({
+            detail: 'ERROR',
+            summary: data.message,
+            duration: APP_CONFIG.toastDuration,
+          });
+        }
+      });
     this.unsubscribe.push(cityListSubscribe);
   }
 
@@ -323,74 +349,75 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
   }
 
   fetchData(id: any) {
-    const userProfileSubscribe = this._service.getUserProfileDetailById(id).subscribe(
-      (data: any) => {
-        if (data.result == 1) {
-          this.editData = data.data;
-          if (this.editData != undefined) {
-            this.userProfileForm = this._fb.group({
-              id: [this.editData.id],
-              name: [
-                this.editData.name,
-                Validators.compose([Validators.required]),
-              ],
-              surname: [
-                this.editData.surname,
-                Validators.compose([Validators.required]),
-              ],
-              employeeId: [this.editData.employeeId],
-              manager: [this.editData.manager],
-              title: [this.editData.title],
-              department: [this.editData.department],
-              myProfile: [
-                this.editData.myProfile,
-                Validators.compose([Validators.required]),
-              ],
-              whyIVolunteer: [this.editData.whyIVolunteer],
-              countryId: [
-                this.editData.countryId,
-                Validators.compose([Validators.required]),
-              ],
-              cityId: [
-                this.editData.cityId,
-                Validators.compose([Validators.required]),
-              ],
-              avilability: [this.editData.avilability],
-              linkdInUrl: [this.editData.linkdInUrl],
-              mySkills: [
-                this.editData.mySkills.split(','),
-                Validators.compose([Validators.required]),
-              ],
-              userImage: [''],
-              userId: [this.editData.userId],
-            });
-            const cityListSubscribe = this._commonService
-              .cityList(this.editData.countryId)
-              .subscribe((data: any) => {
-                this.cityList = data.data;
+    const userProfileSubscribe = this._service
+      .getUserProfileDetailById(id)
+      .subscribe(
+        (data: any) => {
+          if (data.result == 1) {
+            this.editData = data.data;
+            if (this.editData != undefined) {
+              this.userProfileForm = this._fb.group({
+                id: [this.editData.id],
+                name: [
+                  this.editData.name,
+                  Validators.compose([Validators.required]),
+                ],
+                surname: [
+                  this.editData.surname,
+                  Validators.compose([Validators.required]),
+                ],
+                employeeId: [this.editData.employeeId],
+                manager: [this.editData.manager],
+                title: [this.editData.title],
+                department: [this.editData.department],
+                myProfile: [
+                  this.editData.myProfile,
+                  Validators.compose([Validators.required]),
+                ],
+                whyIVolunteer: [this.editData.whyIVolunteer],
+                countryId: [
+                  this.editData.countryId,
+                  Validators.compose([Validators.required]),
+                ],
+                cityId: [
+                  this.editData.cityId,
+                  Validators.compose([Validators.required]),
+                ],
+                avilability: [this.editData.avilability],
+                linkdInUrl: [this.editData.linkdInUrl],
+                mySkills: [
+                  this.editData.mySkills.split(','),
+                  Validators.compose([Validators.required]),
+                ],
+                userImage: [''],
+                userId: [this.editData.userId],
               });
-            if (this.editData.userImage) {
-              this.userImage =
-                this._service.imageUrl + '/' + this.editData.userImage;
+              const cityListSubscribe = this._commonService
+                .cityList(this.editData.countryId)
+                .subscribe((data: any) => {
+                  this.cityList = data.data;
+                });
+              if (this.editData.userImage) {
+                this.userImage =
+                  this._service.imageUrl + '/' + this.editData.userImage;
+              }
+              this.unsubscribe.push(userProfileSubscribe, cityListSubscribe);
             }
-            this.unsubscribe.push(userProfileSubscribe, cityListSubscribe);
+          } else {
+            this._toast.error({
+              detail: 'ERROR',
+              summary: data.message,
+              duration: APP_CONFIG.toastDuration,
+            });
           }
-        } else {
+        },
+        (err) =>
           this._toast.error({
             detail: 'ERROR',
-            summary: data.message,
+            summary: err.message,
             duration: APP_CONFIG.toastDuration,
-          });
-        }
-      },
-      (err) =>
-        this._toast.error({
-          detail: 'ERROR',
-          summary: err.message,
-          duration: APP_CONFIG.toastDuration,
-        })
-    );
-    
+          })
+      );
   }
 
   async onSubmit() {
@@ -399,7 +426,7 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
     formValue.userId = this.userId;
     if (this.userProfileForm.valid) {
       if (this.isFileUpload) {
-         await this._commonService
+        await this._commonService
           .uploadImage(this.formData)
           .pipe()
           .toPromise()
@@ -427,38 +454,39 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
       const mySkillLists = formValue.mySkills.join(',');
       formValue.mySkills = mySkillLists;
       formValue.status = true;
-      const userProfileUpdateSubscribe = this._service.loginUserProfileUpdate(formValue).subscribe(
-        (res: any) => {
-          if (res.result == 1) {
-            this._toast.success({
-              detail: 'SUCCESS',
-              summary: res.data,
-              duration: APP_CONFIG.toastDuration,
-            });
-            setTimeout(() => {
-              this._router.navigate(['home']);
-            }, 1000);
-          } else {
+      const userProfileUpdateSubscribe = this._service
+        .loginUserProfileUpdate(formValue)
+        .subscribe(
+          (res: any) => {
+            if (res.result == 1) {
+              this._toast.success({
+                detail: 'SUCCESS',
+                summary: res.data,
+                duration: APP_CONFIG.toastDuration,
+              });
+              setTimeout(() => {
+                this._router.navigate(['home']);
+              }, 1000);
+            } else {
+              this._toast.error({
+                detail: 'ERROR',
+                summary: res.message,
+                duration: APP_CONFIG.toastDuration,
+              });
+            }
+          },
+          (err) => {
             this._toast.error({
               detail: 'ERROR',
-              summary: res.message,
+              summary: err.message,
               duration: APP_CONFIG.toastDuration,
             });
           }
-        },
-        (err) => {
-          this._toast.error({
-            detail: 'ERROR',
-            summary: err.message,
-            duration: APP_CONFIG.toastDuration,
-          });
-        }
-      );
+        );
       this.unsubscribe.push(userProfileUpdateSubscribe);
     } else {
       ValidateForm.validateAllFormFields(this.userProfileForm);
     }
-
   }
   contactUs: ContactUs;
   changePass: ChangePassword;
@@ -467,48 +495,9 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
     form.value.userId = this.contactUs.userId;
     form.value.name = this.contactUs.name;
     form.value.emailAddress = this.contactUs.emailAddress;
-    const contactUsSubscribe = this._commonService.contactUs(form.value).subscribe(
-      (data: any) => {
-        if (data.result == 1) {
-          this._toast.success({
-            detail: 'SUCCESS',
-            summary: data.data,
-            duration: APP_CONFIG.toastDuration,
-          });
-          setTimeout(() => {
-            form.value.subject = '';
-            form.value.message = '';
-            this.closeContactUsModal();
-          }, 1000);
-        } else {
-          this._toast.error({
-            detail: 'ERROR',
-            summary: data.message,
-            duration: APP_CONFIG.toastDuration,
-          });
-        }
-      },
-      (err) =>
-        this._toast.error({
-          detail: 'ERROR',
-          summary: err.message,
-          duration: APP_CONFIG.toastDuration,
-        })
-    );
-    this.unsubscribe.push(contactUsSubscribe);
-  }
-
-  passwordCompareValidator(fc: AbstractControl): ValidationErrors | null {
-    return fc.get('newPassword')?.value === fc.get('confirmPassword')?.value
-      ? null
-      : { notmatched: true };
-  }
-
-  onSubmitChangePassword(changePasswordForm: NgForm) {
-    const value = changePasswordForm.value;
-    value.userId = this.loginUserId;
-    if (changePasswordForm.valid) {
-      const changePasswordSubscribe = this._loginService.changePassword(value).subscribe(
+    const contactUsSubscribe = this._commonService
+      .contactUs(form.value)
+      .subscribe(
         (data: any) => {
           if (data.result == 1) {
             this._toast.success({
@@ -517,9 +506,9 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
               duration: APP_CONFIG.toastDuration,
             });
             setTimeout(() => {
-              this.closeChangePasswordModal();
-              this._loginService.loggedOut();
-              this._router.navigate(['']);
+              form.value.subject = '';
+              form.value.message = '';
+              this.closeContactUsModal();
             }, 1000);
           } else {
             this._toast.error({
@@ -536,6 +525,55 @@ export class UserEditProfileComponent implements OnInit, OnDestroy {
             duration: APP_CONFIG.toastDuration,
           })
       );
+    this.unsubscribe.push(contactUsSubscribe);
+  }
+
+  passwordCompareValidator(fc: AbstractControl): ValidationErrors | null {
+    return fc.get('newPassword')?.value === fc.get('confirmPassword')?.value
+      ? null
+      : { notmatched: true };
+  }
+
+  onSubmitChangePassword(changePasswordForm: NgForm) {
+    const value: ChangePassword = {
+      userId: Number(this.loginUserId),
+      oldPassword: this.oldPassword,
+      newPassword: this.newPassword,
+      confirmPassword: this.confirmPassword,
+    };
+    
+
+    if (changePasswordForm.valid) {
+      const changePasswordSubscribe = this._loginService
+        .changePassword(value)
+        .subscribe(
+          (data: any) => {
+            if (data.result === 1) {
+              this._toast.success({
+                detail: 'SUCCESS',
+                summary: data.data,
+                duration: APP_CONFIG.toastDuration,
+              });
+              setTimeout(() => {
+                this.closeChangePasswordModal();
+                this._loginService.loggedOut();
+                this._router.navigate(['']);
+              }, 1000);
+            } else {
+              this._toast.error({
+                detail: 'ERROR',
+                summary: data.message,
+                duration: APP_CONFIG.toastDuration,
+              });
+            }
+          },
+          (err) =>
+            this._toast.error({
+              detail: 'ERROR',
+              summary: err.message,
+              duration: APP_CONFIG.toastDuration,
+            })
+        );
       this.unsubscribe.push(changePasswordSubscribe);
     }
   }

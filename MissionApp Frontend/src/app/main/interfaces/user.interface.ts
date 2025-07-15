@@ -39,7 +39,6 @@ export interface ContactUs {
 }
 
 export interface ChangePassword {
-  id: number;
   userId: number;
   oldPassword: string;
   newPassword: string;

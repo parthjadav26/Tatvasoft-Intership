@@ -123,9 +123,21 @@
         <div class="row">
           <div class="form-group row">
             <div class="col-sm-12">
-              <select class="form-select" multiple="multiple" formControlName="mySkills">
+              <!-- <select class="form-select" multiple="multiple" formControlName="mySkills">
                 <option *ngFor="let item of userSkillList" value="{{item}}">{{item}}</option>
-              </select>
+              </select> -->
+               <select
+                    class="form-select skills"
+                    formControlName="missionSkillId"
+                    multiple="multiple"
+                  >
+                    <option
+                      *ngFor="let item of userSkillList"
+                      value="{{ item.value }}"
+                    >
+                      {{ item.text }}
+                    </option>
+                  </select>
               <span class="text-danger" *ngIf="userProfileForm.controls['mySkills'].dirty && userProfileForm.hasError('required','mySkills')">Please Select Skill</span>
             </div>
           </div>
@@ -164,25 +176,55 @@
       <form autocomplete="off" #changePasswordForm="ngForm" (ngSubmit)="changePasswordForm.form.valid && onSubmitChangePassword(changePasswordForm)">
       <div class="modal-body">
         <div class="row">
+          
 
-          <div class="form-group">
-            <input type="password" class="form-control" placeholder="Enter old password" name="oldPassword" #oldPassword="ngModel" [(ngModel)]="changePass.oldPassword" required>
-            <span class="text-danger" *ngIf="oldPassword.invalid && (oldPassword.touched || oldPassword.dirty)">
-                OldPassword is Required
-            </span>
-          </div>
-          <div class="form-group mt-3">
-            <input type="password" class="form-control" placeholder="Enter new password" name="newPassword" #newPassword="ngModel"  [(ngModel)]="changePass.newPassword" required>
-            <span class="text-danger" *ngIf="newPassword.invalid && (newPassword.touched || newPassword.dirty)">
-              NewPassword is Required
-            </span>
-          </div>
-          <div class="form-group mt-3">
-            <input type="password" class="form-control" placeholder="Enter confirm password" name="confirmPassword" #confirmPassword="ngModel"  [(ngModel)]="changePass.confirmPassword" required>
-            <span class="text-danger" *ngIf="confirmPassword.invalid && (confirmPassword.touched || newPassword.dirty)">
-              ConfirmPassword is Required
-          </span>
-          </div>
+          <!-- OLD Password -->
+<div class="form-group">
+  <input
+    type="password"
+    class="form-control"
+    placeholder="Enter old password"
+    name="oldPassword"
+    [(ngModel)]="oldPassword"
+    #oldPwd="ngModel"
+    required
+  />
+  <span class="text-danger" *ngIf="oldPwd.invalid && (oldPwd.touched || oldPwd.dirty)">
+    Old Password is Required
+  </span>
+</div>
+
+<!-- NEW Password -->
+<div class="form-group mt-3">
+  <input
+    type="password"
+    class="form-control"
+    placeholder="Enter new password"
+    name="newPassword"
+    [(ngModel)]="newPassword"
+    #newPwd="ngModel"
+    required
+  />
+  <span class="text-danger" *ngIf="newPwd.invalid && (newPwd.touched || newPwd.dirty)">
+    New Password is Required
+  </span>
+</div>
+
+<!-- CONFIRM Password -->
+<div class="form-group mt-3">
+  <input
+    type="password"
+    class="form-control"
+    placeholder="Enter confirm password"
+    name="confirmPassword"
+    [(ngModel)]="confirmPassword"
+    #confirmPwd="ngModel"
+    required
+  />
+  <span class="text-danger" *ngIf="confirmPwd.invalid && (confirmPwd.touched || confirmPwd.dirty)">
+    Confirm Password is Required
+  </span>
+</div>
         </div>
       </div>
       <div class="modal-footer">
@@ -239,7 +281,7 @@
       </div>
       <form autocomplete="off" #myForm="ngForm" (ngSubmit)="myForm.form.valid && onSubmitContactUs(myForm)">
       <div class="modal-body">
-        <div class="row">
+        <!-- <div class="row">
           <input type="hidden" name="userId" #userId="ngModel" [(ngModel)]="contactUs.userId">
           <div class="form-group">
             <label class="col-form-label">Name<span class="text-danger">*</span></label>
@@ -259,7 +301,7 @@
             <textarea class="form-control" rows="3"placeholder="Enter your message.." name="message" #message="ngModel" [(ngModel)]="contactUs.message" required></textarea>
             <span class="text-danger" *ngIf="message.invalid && (message.touched || message.dirty)">Please Enter Message</span>
           </div>
-        </div>
+        </div> -->
       </div>
       <div class="modal-footer">
         <button type="button" class="btn-Close" data-dismiss="modal" (click)="closeContactUsModal()"><span class="Close"> Cancel</span> </button>

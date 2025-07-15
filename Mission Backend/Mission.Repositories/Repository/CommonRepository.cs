@@ -8,29 +8,6 @@ namespace Mission.Repositories.Repository
     {
         private readonly MissionDbContext _dbContext = dbContext;
 
-
-
-        //public List<DropDownResponseModel> MissionCountryList()
-        //{
-        //    var countries = _dbContext.Missions
-        //        .Select(m => new DropDownResponseModel(m.CountryId, m.Country.CountryName))
-        //        .Distinct()
-        //        .ToList();
-
-        //    return countries;
-        //}
-
-        //public List<DropDownResponseModel> MissionCityList()
-        //{
-        //    var cities = _dbContext.Missions
-        //        .Where(m => !m.IsDeleted)
-        //        .Select(m => new DropDownResponseModel(m.CityId, m.City.CityName))
-        //        .Distinct()
-        //        .ToList();
-
-        //    return cities;
-        //}
-
         public List<DropDownResponseModel> CountryList()
         {
             var countries = _dbContext.Countries
@@ -51,15 +28,5 @@ namespace Mission.Repositories.Repository
 
             return cities;
         }
-
-        //public List<DropDownResponseModel> MissionTitleList()
-        //{
-        //    var missionSkill = _dbContext.Missions
-        //        .Where(m => !m.IsDeleted)
-        //        .Select(m => new DropDownResponseModel(m.Id, m.MissionTitle))
-        //        .ToList();
-
-        //    return missionSkill;
-        //}
     }
 }

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Mission.Entities;
+using Mission.Entities.Helper;
 using Mission.Entities.Models;
+using Mission.Entities.ViewModels;
 using Mission.Entities.ViewModels.Login;
 using Mission.Entities.ViewModels.User;
 using Mission.Repositories.IRepository;
@@ -117,7 +119,7 @@ namespace Mission.Repositories.Repository
             };
         }
 
-        public async Task<(bool response,string message)> UpdateUserAsync(UpdateUserRequestModel model)
+        public async Task<(bool response,string message)> UpdateUserAsync(UpdateUserRequestModel model,string imageUploadPath)
         {
             var userInDb = _context.Users.Where(u =>u.Id != model.Id && u.EmailAddress.ToLower() == model.EmailAddress.ToLower()).FirstOrDefault();
 
@@ -132,6 +134,20 @@ namespace Mission.Repositories.Repository
             {
                 return (false, "User not found");
             }
+
+            if(model.RemoveImage && string.IsNullOrEmpty(user.UserImage))
+            {
+                string oldImageFullPath = Path.Combine(imageUploadPath, user.UserImage.Replace("/", Path.DirectorySeparatorChar.ToString()));
+                if(File.Exists(oldImageFullPath))
+                    File.Delete(oldImageFullPath);
+            }
+
+            if (model.ProfileImage != null) 
+            {
+                string newImagePath = await UploadFile.SaveImageAsync(model.ProfileImage,"UploadMissionImage/Images",imageUploadPath);
+                user.UserImage = newImagePath;
+            }
+
             user.FirstName = model.FirstName;
             user.LastName = model.LastName;
             user.EmailAddress = model.EmailAddress;
@@ -158,6 +174,63 @@ namespace Mission.Repositories.Repository
             return true;
         }
 
+        public async Task<ResponseResult> ChangePasswordAsync(ChangePasswordRequestModel model)
+        {
+            var result = new ResponseResult();
 
+            var user = await _context.Users.FindAsync(model.UserId);
+            if (user == null)
+            {
+                result.Result = ResponseStatus.Error;
+                result.Message = "User not found";
+                return result;
+            }
+
+            if(model.NewPassword != model.confirmPassword)
+            {
+                result.Result = ResponseStatus.Error;
+                result.Message = "New password and Confirm password does not match";
+                return result;
+            }
+
+            if (new PasswordHasher<User>().VerifyHashedPassword(user, user.Password, model.OldPassword) == PasswordVerificationResult.Failed)
+            {
+                result.Result = ResponseStatus.Error;
+                result.Message = "Old password does not match";
+                return result;
+
+            }
+
+            var hasher = new PasswordHasher<User>();
+            user.Password = hasher.HashPassword(user, model.NewPassword);
+            _context.Users.Update(user);
+            await _context.SaveChangesAsync();
+
+            result.Result = ResponseStatus.Success;
+            result.Message = "Password updated successfully";
+            return result;
+        }
+
+
+        public async Task<UserResponseModel?> GetUserProfileDetailById(int userId)
+        {
+            var user = await _context.Users.FindAsync(userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            return new UserResponseModel
+            {
+                Id = user.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                EmailAddress = user.EmailAddress,
+                PhoneNumber = user.PhoneNumber,
+                UserType = user.UserType,
+                ProfileImage = user.UserImage,
+            };
+        }
     }
 }

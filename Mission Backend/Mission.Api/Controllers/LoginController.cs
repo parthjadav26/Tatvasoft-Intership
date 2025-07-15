@@ -9,9 +9,10 @@ namespace Mission.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class LoginController(IUserService userService) : ControllerBase
+    public class LoginController(IUserService userService, IWebHostEnvironment hostingEnvironment) : ControllerBase
     {
         private readonly IUserService _userService = userService;
+        private readonly IWebHostEnvironment _hostingEnvironment = hostingEnvironment;
 
         [HttpPost]
         [AllowAnonymous]
@@ -72,7 +73,7 @@ namespace Mission.Api.Controllers
         [Route("UpdateUser")]
         public async Task<IActionResult> UpdateUser(UpdateUserRequestModel model)
         {
-            var response = await _userService.UpdateUserAsync(model);
+            var response = await _userService.UpdateUserAsync(model,_hostingEnvironment.ContentRootPath);
 
             if (response.Message == "User not found")
             {
@@ -81,5 +82,39 @@ namespace Mission.Api.Controllers
 
             return Ok(response);
         }
+
+        [HttpPost]
+        [Authorize]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword(ChangePasswordRequestModel model)
+        {
+            var response = await _userService.ChangePasswordAsync(model);
+
+            if (response.Result == ResponseStatus.Error)
+            {
+                return BadRequest(response);
+            }
+
+            return Ok(response);
+        }
+        [HttpGet]
+        [Route("GetUserProfileDetailById/{userId:int}")]
+        public async Task<IActionResult> GetUserProfileDetailById(int userId)
+        {
+            var response = await _userService.GetUserProfileDetailById(userId);
+            var result = new ResponseResult();
+
+            if (response == null)
+            {
+                result.Message = "User not found";
+                result.Result = ResponseStatus.Error;
+                return NotFound(result);
+            }
+
+            result.data = response;
+            result.Result = ResponseStatus.Success;
+            return Ok(result);
+        }
+
     }
 }

@@ -11,7 +11,11 @@ namespace Mission.Services.IService
         Task<List<UserResponseModel>> GetUsersAsync();
         Task<bool> RegisterUserAsync(AddUserRequestModel model);
         Task<UserResponseModel?> GetLoginUserDetailById(int userId);
-        Task<ResponseResult> UpdateUserAsync(UpdateUserRequestModel model);
+        Task<ResponseResult> UpdateUserAsync(UpdateUserRequestModel model, string imageUploadPath);
         Task<bool> DeleteUser(int userId);
+
+        Task<ResponseResult> ChangePasswordAsync(ChangePasswordRequestModel model);
+
+        Task<UserResponseModel?> GetUserProfileDetailById(int userId);
     }
 }

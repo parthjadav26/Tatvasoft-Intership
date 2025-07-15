@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Mission.Entities.ViewModels;
 using Mission.Services.IService;
 
@@ -7,7 +6,7 @@ namespace Mission.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "admin")]
+    //[Authorize(Roles = "admin,user")]
     public class CommonController(ICommonService commonService) : ControllerBase
     {
         private readonly ICommonService _commonService = commonService;
@@ -89,5 +88,6 @@ namespace Mission.Api.Controllers
                 throw;
             }
         }
+
     }
 }

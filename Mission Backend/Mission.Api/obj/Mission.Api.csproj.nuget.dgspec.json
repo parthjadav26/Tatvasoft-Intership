@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Api\\Mission.Api.csproj": {}
+    "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Api\\Mission.Api.csproj": {}
   },
   "projects": {
-    "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Api\\Mission.Api.csproj": {
+    "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Api\\Mission.Api.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Api\\Mission.Api.csproj",
+        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Api\\Mission.Api.csproj",
         "projectName": "Mission.Api",
-        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Api\\Mission.Api.csproj",
+        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Api\\Mission.Api.csproj",
         "packagesPath": "C:\\Users\\A\\.nuget\\packages\\",
-        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Api\\obj\\",
+        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Api\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Services\\Mission.Services.csproj": {
-                "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Services\\Mission.Services.csproj"
+              "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Services\\Mission.Services.csproj": {
+                "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Services\\Mission.Services.csproj"
               }
             }
           }
@@ -100,14 +100,14 @@
         }
       }
     },
-    "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Entities\\Mission.Entities.csproj": {
+    "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Entities\\Mission.Entities.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Entities\\Mission.Entities.csproj",
+        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Entities\\Mission.Entities.csproj",
         "projectName": "Mission.Entities",
-        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Entities\\Mission.Entities.csproj",
+        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Entities\\Mission.Entities.csproj",
         "packagesPath": "C:\\Users\\A\\.nuget\\packages\\",
-        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Entities\\obj\\",
+        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Entities\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -146,6 +146,10 @@
         "net8.0": {
           "targetAlias": "net8.0",
           "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[5.0.17, )"
+            },
             "Microsoft.EntityFrameworkCore": {
               "target": "Package",
               "version": "[8.0.11, )"
@@ -181,14 +185,14 @@
         }
       }
     },
-    "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Repositories\\Mission.Repositories.csproj": {
+    "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Repositories\\Mission.Repositories.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Repositories\\Mission.Repositories.csproj",
+        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Repositories\\Mission.Repositories.csproj",
         "projectName": "Mission.Repositories",
-        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Repositories\\Mission.Repositories.csproj",
+        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Repositories\\Mission.Repositories.csproj",
         "packagesPath": "C:\\Users\\A\\.nuget\\packages\\",
-        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Repositories\\obj\\",
+        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Repositories\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -209,8 +213,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Entities\\Mission.Entities.csproj": {
-                "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Entities\\Mission.Entities.csproj"
+              "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Entities\\Mission.Entities.csproj": {
+                "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Entities\\Mission.Entities.csproj"
               }
             }
           }
@@ -260,14 +264,14 @@
         }
       }
     },
-    "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Services\\Mission.Services.csproj": {
+    "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Services\\Mission.Services.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Services\\Mission.Services.csproj",
+        "projectUniqueName": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Services\\Mission.Services.csproj",
         "projectName": "Mission.Services",
-        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Services\\Mission.Services.csproj",
+        "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Services\\Mission.Services.csproj",
         "packagesPath": "C:\\Users\\A\\.nuget\\packages\\",
-        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Services\\obj\\",
+        "outputPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Services\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -288,8 +292,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Repositories\\Mission.Repositories.csproj": {
-                "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Day-4\\Mission.Repositories\\Mission.Repositories.csproj"
+              "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Repositories\\Mission.Repositories.csproj": {
+                "projectPath": "F:\\Tatvasoft\\Tatvasoft-Intership\\Mission Backend\\Mission.Repositories\\Mission.Repositories.csproj"
               }
             }
           }

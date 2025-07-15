@@ -151,53 +151,54 @@ export class UpdateUserComponent implements OnInit, OnDestroy {
     this.unsubscribe.push(getUserSubscribe);
   }
 
-  onSubmit() {
-    this.formValid = true;
-    if (this.updateForm.valid) {
-      const formData = new FormData();
-      const updatedUserData = this.updateForm.getRawValue();
-      Object.keys(updatedUserData).forEach((key) => {
-        formData.append(key, updatedUserData[key]);
-      });
+onSubmit() {
+  this.formValid = true;
+  if (this.updateForm.valid) {
+    const formData = new FormData();
+    const updatedUserData = this.updateForm.getRawValue();
+    Object.keys(updatedUserData).forEach((key) => {
+      formData.append(key, updatedUserData[key]);
+    });
 
-      if (this.selectedFile) {
-        formData.append('profileImage', this.selectedFile);
-      }
-
-      const updateUserSubscribe = this._service
-        .updateUser(this.updateForm.value)
-        .subscribe(
-          (data: any) => {
-            if (data.result == 1) {
-              this._toast.success({
-                detail: 'SUCCESS',
-                summary: this.isupdateProfile
-                  ? 'Profile Updated Successfully'
-                  : data.data,
-                duration: APP_CONFIG.toastDuration,
-              });
-              setTimeout(() => {
-                if (this.isupdateProfile) {
-                  this._router.navigate(['admin/profile']);
-                } else {
-                  this._router.navigate(['admin/user']);
-                }
-              }, 1000);
-            } else {
-              this._toastr.error(data.message);
-            }
-          },
-          (err) =>
-            this._toast.error({
-              detail: 'ERROR',
-              summary: err.message,
-              duration: APP_CONFIG.toastDuration,
-            })
-        );
-      this.formValid = false;
-      this.unsubscribe.push(updateUserSubscribe);
+    if (this.selectedFile) {
+      formData.append('profileImage', this.selectedFile);
     }
+
+    const updateUserSubscribe = this._service
+      .updateUser(formData) // ✅ Use FormData instead of this.updateForm.value
+      .subscribe(
+        (data: any) => {
+          if (data.result == 1) {
+            this._toast.success({
+              detail: 'SUCCESS',
+              summary: this.isupdateProfile
+                ? 'Profile Updated Successfully'
+                : data.data,
+              duration: APP_CONFIG.toastDuration,
+            });
+            setTimeout(() => {
+              if (this.isupdateProfile) {
+                this._router.navigate(['admin/profile']);
+              } else {
+                this._router.navigate(['admin/user']);
+              }
+            }, 1000);
+          } else {
+            this._toastr.error(data.message);
+          }
+        },
+        (err) =>
+          this._toast.error({
+            detail: 'ERROR',
+            summary: err.message,
+            duration: APP_CONFIG.toastDuration,
+          })
+      );
+    this.formValid = false;
+    this.unsubscribe.push(updateUserSubscribe);
   }
+}
+
 
   onCancel() {
     if (this.isupdateProfile) {

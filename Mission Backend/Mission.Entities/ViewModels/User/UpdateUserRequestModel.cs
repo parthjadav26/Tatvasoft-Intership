@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.AspNetCore.Http;
+using System.Text.Json.Serialization;
 
 namespace Mission.Entities.ViewModels.User
 {
@@ -16,6 +13,10 @@ namespace Mission.Entities.ViewModels.User
         public string EmailAddress { get; set; } = string.Empty; 
         public string UserType { get; set; } = string.Empty;
         public bool RemoveImage { get; set; }
+
+        [JsonIgnore]
+
+        public IFormFile? ProfileImage { get; set; } = null;
 
 
     }

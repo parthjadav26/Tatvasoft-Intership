@@ -29,3 +29,19 @@ F:\Tatvasoft\Tatvasoft-Intership\Day-4\Mission.Repositories\obj\Debug\net8.0\Mis
 F:\Tatvasoft\Tatvasoft-Intership\Day-4\Mission.Repositories\obj\Debug\net8.0\refint\Mission.Repositories.dll
 F:\Tatvasoft\Tatvasoft-Intership\Day-4\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.pdb
 F:\Tatvasoft\Tatvasoft-Intership\Day-4\Mission.Repositories\obj\Debug\net8.0\ref\Mission.Repositories.dll
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\bin\Debug\net8.0\Mission.Repositories.deps.json
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\bin\Debug\net8.0\Mission.Repositories.dll
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\bin\Debug\net8.0\Mission.Repositories.pdb
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\bin\Debug\net8.0\Mission.Entities.dll
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\bin\Debug\net8.0\Mission.Entities.pdb
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.csproj.AssemblyReference.cache
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.GeneratedMSBuildEditorConfig.editorconfig
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.AssemblyInfoInputs.cache
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.AssemblyInfo.cs
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.csproj.CoreCompileInputs.cache
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.sourcelink.json
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission..7EFB1ED9.Up2Date
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.dll
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\refint\Mission.Repositories.dll
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\Mission.Repositories.pdb
+F:\Tatvasoft\Tatvasoft-Intership\Mission Backend\Mission.Repositories\obj\Debug\net8.0\ref\Mission.Repositories.dll

@@ -8,6 +8,7 @@ import { APP_CONFIG } from 'src/app/main/configs/environment.config';
 import { CommonModule } from '@angular/common';
 import { NgToastService } from 'ng-angular-popup';
 import { ClientService } from 'src/app/main/services/client.service';
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -16,8 +17,8 @@ import { ClientService } from 'src/app/main/services/client.service';
   styleUrls: ['./header.component.css'],
 })
 export class HeaderComponent implements OnInit, OnDestroy {
-  data: any;
-  userDetail: any;
+  data: string = '';
+  userDetail: string = 'User';
   loggedInUserDetail: any;
   private unsubscribe: Subscription[] = [];
 
@@ -27,61 +28,67 @@ export class HeaderComponent implements OnInit, OnDestroy {
     public _router: Router,
     private _toast: NgToastService
   ) {
+    // Update clock every second
     setInterval(() => {
       const now = new Date();
-      this.data = dateFormat(now, 'dddd mmmm dS,yyyy, h:MM:ss TT');
-    }, 1);
-  }
-  ngOnInit(): void {
-    const user = this._service.decodedToken();
-    this.loggedInUserDetail = user;
-    this.userDetail = user.fullName;
-    // const user = this._service.getUserDetail();
-    // this.loginUserDetailByUserId(user.userId);
-    // const userSubscription = this._service
-    //   .getCurrentUser()
-    //   .subscribe((data: any) => {
-    //     const userName = this._service.getUserFullName();
-    //     data == null
-    //       ? (this.userDetail = userName)
-    //       : (this.userDetail = data.fullName);
-    //   });
-    // this.unsubscribe.push(userSubscription);
+      this.data = dateFormat(now, 'dddd mmmm dS, yyyy, h:MM:ss TT');
+    }, 1000);
   }
 
-  loginUserDetailByUserId(id: any) {
-    const userDetailSubscribe = this._clientService
-      .loginUserDetailById(id)
-      .subscribe(
-        (data: any) => {
-          if (data.result == 1) {
-            this.loggedInUserDetail = data.data;
-          } else {
-            this._toast.error({
-              detail: 'ERROR',
-              summary: data.message,
-              duration: APP_CONFIG.toastDuration,
-            });
-          }
-        },
-        (err) =>
-          this._toast.error({
-            detail: 'ERROR',
-            summary: err.message,
-            duration: APP_CONFIG.toastDuration,
-          })
-      );
-    this.unsubscribe.push(userDetailSubscribe);
+  ngOnInit(): void {
+    const user = this._service.decodedToken();
+    if (user) {
+      this.loggedInUserDetail = user;
+      this.userDetail = user.fullName || 'User';
+       this.loginUserDetailByUserId(user.id);
+    }
   }
 
   getFullImageUrl(relativePath: string): string {
-    return relativePath ? `${APP_CONFIG.imageBaseUrl}/${relativePath}` : '';
+    if (!relativePath) return 'assets/Images/default-user.png';
+    if (relativePath.startsWith('http')) return relativePath;
+    return `${APP_CONFIG.imageBaseUrl}/${relativePath}?t=${Date.now()}`;
   }
-  loggedOut() {
+
+  onImageError(event: Event) {
+    (event.target as HTMLImageElement).src = 'assets/Images/default-user.png';
+  }
+
+  onLogoutClick(event: Event): void {
+    event.preventDefault();
+    event.stopPropagation();
+    this.loggedOut();
+  }
+
+  loggedOut(): void {
     this._service.loggedOut();
     this._router.navigate(['']);
   }
-  ngOnDestroy() {
+
+  ngOnDestroy(): void {
     this.unsubscribe.forEach((sb) => sb.unsubscribe());
+  }
+
+  loginUserDetailByUserId(id: any): void {
+    const sub = this._clientService.loginUserDetailById(id).subscribe(
+      (data: any) => {
+        if (data.result === 1) {
+          this.loggedInUserDetail = data.data;
+        } else {
+          this._toast.error({
+            detail: 'ERROR',
+            summary: data.message,
+            duration: APP_CONFIG.toastDuration,
+          });
+        }
+      },
+      (err) =>
+        this._toast.error({
+          detail: 'ERROR',
+          summary: err.message,
+          duration: APP_CONFIG.toastDuration,
+        })
+    );
+    this.unsubscribe.push(sub);
   }
 }
